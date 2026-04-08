@@ -18,7 +18,9 @@ export interface NewsItem {
   related_publications?: string[];
   lang?: 'ja' | 'en';
   category: NewsCategory;
-  image?: string; // 画像ファイル名 / Image filename
+  image?: string; // メイン画像 / Main image
+  images?: string[]; // 追加画像ギャラリー / Additional images
+  pdf?: string; // PDF資料 / PDF document
   link?: string; // 外部リンク / External link
   draft?: boolean; // 下書きフラグ / Draft flag
 }
@@ -38,6 +40,8 @@ export interface NewsMetadata {
   lang?: 'ja' | 'en';
   category: NewsCategory;
   image?: string;
+  images?: string[];
+  pdf?: string;
   link?: string;
   draft?: boolean;
 }
