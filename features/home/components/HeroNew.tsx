@@ -35,7 +35,7 @@ export const HeroNew = ({ onNavigate }: HeroNewProps) => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#344F1F] pt-20 min-h-[85vh] flex items-center justify-center">
+    <section className="relative overflow-hidden bg-[#344F1F] pt-20 min-h-screen flex items-center justify-center">
 
       {/* ── Scrolling image strip ── */}
       {/* Fix: images displayed at natural aspect ratio (h-[80vh] w-auto) → 80%+ visible */}
@@ -49,7 +49,7 @@ export const HeroNew = ({ onNavigate }: HeroNewProps) => {
               key={i}
               src={src}
               alt=""
-              className="h-[80vh] w-auto flex-shrink-0 rounded-lg"
+              className="h-screen w-auto flex-shrink-0 rounded-lg"
               draggable={false}
             />
           ))}
