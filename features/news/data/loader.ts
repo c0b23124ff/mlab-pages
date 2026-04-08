@@ -67,10 +67,56 @@ const newsDataMap: Record<string, NewsMetadata> = {
     title: 'Research on Reinforcement Learning published in Nature Machine Intelligence.',
     date: '2023.12.10',
     category: 'Publication',
-    link: 'https://www.nature.com/natmachintell/',
+    link: 'https://www.nature.com/natmachinteel/',
     summary: 'Our reinforcement learning research has been published in a top-tier journal.',
     tags: ['Reinforcement Learning', 'Journal'],
     lang: 'en',
+  },
+  'news-007': {
+    title: '川崎重工 × JSK × 松岡研究室 合同交流会を開催',
+    date: '2026.03.23',
+    category: 'Event',
+    image: '/images/news-007/kawasaki-exchange-1.jpg',
+    images: ['/images/news-007/kawasaki-exchange-2.jpg'],
+    summary: `2026年3月23日、東京工科大学 松岡研究室にて、川崎重工業株式会社・東京大学 情報システム工学研究室（JSK）・松岡研究室の三者による合同交流会を開催しました。
+
+本交流会では、Physical AI の最前線に関する技術討論をはじめ、東京工科大学における AI・ロボット教育の取り組み紹介、そして松岡研究室の学生による研究発表が行われました。
+
+学生2名がそれぞれの研究テーマ――ロボットビジョンを用いた物体認識システムと、Spatial AI による三次元環境マッピング――について発表し、川崎重工・JSKの研究者・エンジニアから具体的なフィードバックをいただきました。
+
+産学連携の視点から実課題を議論する貴重な機会となり、今後の共同研究の可能性についても意見交換が行われました。`,
+    tags: ['産学連携', 'Physical AI', 'ロボットビジョン', 'Spatial AI'],
+    related_members: ['松岡研究室 学生'],
+    lang: 'ja',
+  },
+  'news-008': {
+    title: 'NVIDIA 学生アンバサダー合同ワークショップに2名が参加',
+    date: '2026.02.28',
+    category: 'Event',
+    image: '/images/news-008/nvidia-workshop.jpg',
+    summary: `2026年2月28日、大阪を代表する繁華街に位置する大阪工業大学梅田キャンパスにて、「～GPUを用いた技術の深層と応用の最前線～ AI・デジタルツイン・ロボティクス 学生アンバサダー合同ワークショップ」が開催され、現地の会場とオンラインをあわせて約80名が参加しました。
+
+松岡研究室からは NVIDIA 学生アンバサダーである2名が参加し、GPU を活用したロボットビジョン・Spatial AI 研究の最新成果を発表しました。
+
+本ワークショップでは、全国の NVIDIA 学生アンバサダーが一堂に会し、AI・デジタルツイン・ロボティクス分野における最先端の技術とその応用事例を共有。参加者同士が活発に意見交換を行い、次世代の AI・ロボット研究を担う学生ネットワークのさらなる強化につながりました。`,
+    tags: ['NVIDIA', 'GPU', 'AI', 'ロボティクス', 'デジタルツイン'],
+    related_members: ['NVIDIA 学生アンバサダー 2名'],
+    lang: 'ja',
+  },
+  'news-009': {
+    title: 'CEATEC 2025 に松岡研究室が出展',
+    date: '2025.10.15',
+    category: 'Event',
+    image: '/images/news-009/ceatec-booth.jpg',
+    images: ['/images/news-009/ceatec-group.jpg'],
+    pdf: '/images/news-009/CEATEC2025-overview.pdf',
+    summary: `2025年10月14日〜18日、幕張メッセにて開催された「CEATEC 2025」に、松岡研究室が出展しました。
+
+本展示会は、アジア最大級の IT・エレクトロニクス総合展示会であり、国内外から多数の来場者が訪れます。松岡研究室のブースでは、ロボットビジョンと Spatial AI を組み合わせたリアルタイム三次元環境認識システムのデモを実施し、多くの企業・研究者・学生の方々に研究成果を体感していただきました。
+
+展示を通じて、産業応用や共同研究に向けた具体的な問い合わせも多数いただき、研究の社会実装に向けた新たなつながりが生まれました。`,
+    tags: ['CEATEC', '展示会', 'ロボットビジョン', 'Spatial AI'],
+    lang: 'ja',
   },
 };
 
