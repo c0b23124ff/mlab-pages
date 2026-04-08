@@ -1,11 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '../../components/ui/button';
 import { FileText, Filter, Check, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getAllPublications, filterByYear, filterByTags } from './data/loader';
-import { YEARS, TECH_TAGS } from './types';
+import { getAllPublications, getYearFilterOptions, filterByYear, filterByTags } from './data/loader';
+import { TECH_TAGS } from './types';
 
 export const AchievementsPage = () => {
-  const allPublications = getAllPublications();
+  const allPublications = useMemo(() => getAllPublications(), []);
+  const yearFilterOptions = useMemo(() => getYearFilterOptions(allPublications), [allPublications]);
   const [selectedYear, setSelectedYear] = useState('All');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -46,7 +47,7 @@ export const AchievementsPage = () => {
                 発表年 (Year)
               </h3>
               <div className="flex flex-wrap lg:flex-col gap-2">
-                {YEARS.map(year => (
+                {yearFilterOptions.map(year => (
                   <button
                     key={year}
                     onClick={() => setSelectedYear(year)}

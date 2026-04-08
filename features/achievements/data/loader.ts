@@ -28,6 +28,8 @@ const publicationsDataMap: Record<string, PublicationMetadata> = Object.fromEntr
   ]),
 );
 
+const RECENT_YEAR_COUNT = 4;
+
 /**
  * Get all publications
  */
@@ -54,6 +56,25 @@ export function getAllPublications(): Publication[] {
 }
 
 /**
+ * Build year filter options based on the latest publication year.
+ * Result format: ['All', latest, latest-1, latest-2, latest-3, `Prior to ${latest-3}`]
+ */
+export function getYearFilterOptions(pubs: Publication[]): string[] {
+  if (pubs.length === 0) {
+    return ['All'];
+  }
+
+  const latestYear = Math.max(...pubs.map(pub => pub.year));
+  const recentYears = Array.from(
+    { length: RECENT_YEAR_COUNT },
+    (_, index) => (latestYear - index).toString(),
+  );
+  const priorBoundaryYear = latestYear - (RECENT_YEAR_COUNT - 1);
+
+  return ['All', ...recentYears, `Prior to ${priorBoundaryYear}`];
+}
+
+/**
  * Get publication by ID
  */
 export function getPublicationById(id: string): Publication | null {
@@ -71,9 +92,13 @@ export function getPublicationById(id: string): Publication | null {
  */
 export function filterByYear(pubs: Publication[], selectedYear: string): Publication[] {
   if (selectedYear === 'All') return pubs;
-  if (selectedYear === 'Prior to 2021') {
-    return pubs.filter(pub => pub.year <= 2021);
+
+  const priorMatch = selectedYear.match(/^Prior to (\d{4})$/);
+  if (priorMatch) {
+    const boundaryYear = Number.parseInt(priorMatch[1], 10);
+    return pubs.filter(pub => pub.year < boundaryYear);
   }
+
   return pubs.filter(pub => pub.year.toString() === selectedYear);
 }
 
