@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Calendar, ArrowLeft, ExternalLink, Tag } from 'lucide-react';
+import { Calendar, ArrowLeft, ExternalLink, Tag, FileDown } from 'lucide-react';
 import { Badge } from '../../components/ui/badge';
 import { getNewsById } from './data/loader';
 import { categoryColors, getCategoryIcon } from './types';
@@ -30,6 +30,10 @@ export const NewsDetailPage = ({ newsId, onNavigate }: NewsDetailPageProps) => {
   }
 
   const Icon = getCategoryIcon(item.category);
+  const allImages = [
+    ...(item.image ? [item.image] : []),
+    ...(item.images ?? []),
+  ];
 
   return (
     <div className="min-h-screen pt-20 bg-[#F9F5F0]">
@@ -50,20 +54,36 @@ export const NewsDetailPage = ({ newsId, onNavigate }: NewsDetailPageProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Hero image */}
-          <div className="w-full h-72 sm:h-96 rounded-2xl overflow-hidden mb-8 shadow-md">
-            {item.image ? (
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-[#344F1F] to-[#4A6B2E] flex items-center justify-center">
-                <Icon className="w-24 h-24 text-[#F4991A]" />
-              </div>
-            )}
-          </div>
+          {/* Single image */}
+          {allImages.length === 1 && (
+            <div className="w-full h-72 sm:h-96 rounded-2xl overflow-hidden mb-8 shadow-md">
+              <img src={allImages[0]} alt={item.title} className="w-full h-full object-cover" />
+            </div>
+          )}
+
+          {/* No image fallback */}
+          {allImages.length === 0 && (
+            <div className="w-full h-72 sm:h-96 rounded-2xl overflow-hidden mb-8 shadow-md bg-gradient-to-br from-[#344F1F] to-[#4A6B2E] flex items-center justify-center">
+              <Icon className="w-24 h-24 text-[#F4991A]" />
+            </div>
+          )}
+
+          {/* Gallery (2+ images) */}
+          {allImages.length >= 2 && (
+            <div className="grid grid-cols-2 gap-3 mb-8">
+              {allImages.map((src, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`rounded-2xl overflow-hidden shadow-md ${allImages.length === 2 ? 'h-64 sm:h-80' : 'h-48'}`}
+                >
+                  <img src={src} alt={`${item.title} ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                </motion.div>
+              ))}
+            </div>
+          )}
 
           {/* Meta */}
           <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -83,7 +103,7 @@ export const NewsDetailPage = ({ newsId, onNavigate }: NewsDetailPageProps) => {
 
           {/* Summary / body */}
           {item.summary && (
-            <p className="text-lg text-[#344F1F]/80 leading-relaxed mb-8 border-l-4 border-[#F4991A] pl-5">
+            <p className="text-lg text-[#344F1F]/80 leading-relaxed mb-8 border-l-4 border-[#F4991A] pl-5 whitespace-pre-line">
               {item.summary}
             </p>
           )}
@@ -93,10 +113,7 @@ export const NewsDetailPage = ({ newsId, onNavigate }: NewsDetailPageProps) => {
             <div className="flex flex-wrap items-center gap-2 mb-8">
               <Tag className="w-4 h-4 text-[#344F1F]/50" />
               {item.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-sm bg-[#F2EAD3] text-[#344F1F] px-3 py-1 rounded-full"
-                >
+                <span key={tag} className="text-sm bg-[#F2EAD3] text-[#344F1F] px-3 py-1 rounded-full">
                   {tag}
                 </span>
               ))}
@@ -111,13 +128,26 @@ export const NewsDetailPage = ({ newsId, onNavigate }: NewsDetailPageProps) => {
             </div>
           )}
 
+          {/* PDF download */}
+          {item.pdf && (
+            <a
+              href={item.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#344F1F] hover:bg-[#2a3f18] text-white font-bold px-8 py-4 rounded-full transition-colors mr-4 mb-4"
+            >
+              <FileDown className="w-5 h-5" />
+              概要資料をダウンロード
+            </a>
+          )}
+
           {/* External link */}
           {item.link && (
             <a
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#F4991A] hover:bg-[#D88615] text-white font-bold px-8 py-4 rounded-full transition-colors"
+              className="inline-flex items-center gap-2 bg-[#F4991A] hover:bg-[#D88615] text-white font-bold px-8 py-4 rounded-full transition-colors mb-4"
             >
               詳細・外部リンク
               <ExternalLink className="w-5 h-5" />
