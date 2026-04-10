@@ -35,6 +35,37 @@ async function ensureDirectoryDoesNotExist(dirPath, id) {
   }
 }
 
+async function ensurePublicationIdIsUnique(baseDir, id) {
+  let entries = [];
+  try {
+    entries = await fs.readdir(baseDir, { withFileTypes: true });
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return;
+    }
+    throw error;
+  }
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+
+    if (entry.name === id) {
+      throw new Error(`Directory already exists for ID '${id}'. Choose another ID.`);
+    }
+
+    const nestedPath = join(baseDir, entry.name, id);
+    try {
+      await fs.access(nestedPath);
+      throw new Error(`Directory already exists for ID '${id}'. Choose another ID.`);
+    } catch (error) {
+      if (error && error.code === 'ENOENT') {
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+
 async function main() {
   console.log('\nAdd Publication Tool\n');
   console.log('----------------------------------------------\n');
@@ -114,46 +145,16 @@ async function main() {
       ...(draft && { draft }),
     };
 
-    const pubDir = join(__dirname, '..', 'features', 'achievements', 'data', 'publications', id);
+    const publicationsRootDir = join(__dirname, '..', 'features', 'achievements', 'data', 'publications');
+    await fs.mkdir(publicationsRootDir, { recursive: true });
+    await ensurePublicationIdIsUnique(publicationsRootDir, id);
+
+    const pubDir = join(publicationsRootDir, String(year), id);
     await ensureDirectoryDoesNotExist(pubDir, id);
     await fs.mkdir(pubDir, { recursive: true });
 
     const metadataPath = join(pubDir, 'metadata.json');
     await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`, 'utf8');
-
-    const readmePath = join(pubDir, 'README.md');
-    const readme = `# ${title}
-
-## Metadata
-
-This directory can contain publication files:
-
-- \`metadata.json\` - Required metadata (created)
-- \`paper.pdf\` - Optional paper PDF
-- \`slides.pdf\` or \`slides.pptx\` - Optional slides
-- \`poster.pdf\` or \`poster.jpg\` - Optional poster
-- \`bibtex.bib\` - Optional BibTeX
-- \`thumbnail.jpg\` - Optional thumbnail
-
-## Example Structure
-
-\`\`\`
-${id}/
-├── metadata.json
-├── paper.pdf
-├── slides.pdf
-├── poster.jpg
-├── bibtex.bib
-└── README.md
-\`\`\`
-
-## Notes
-
-Edit \`metadata.json\` to update publication information.
-No manual update to \`loader.ts\` is required.
-`;
-
-    await fs.writeFile(readmePath, readme, 'utf8');
 
     console.log('\nPublication created successfully.\n');
     console.log(`Directory: ${pubDir}`);

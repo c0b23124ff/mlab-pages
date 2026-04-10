@@ -2,7 +2,7 @@
 
 /**
  * Import publications from CSV and create:
- * features/achievements/data/publications/pub-XXX/metadata.json
+ * features/achievements/data/publications/YYYY/pub-XXX/metadata.json
  *
  * Usage:
  *   node scripts/importPublicationsFromCsv.mjs
@@ -184,12 +184,57 @@ function toMetadataRows(rows, headerIndex, asDraft) {
   return results;
 }
 
-async function nextPublicationNumber(baseDir) {
-  let maxId = 0;
-  const entries = await fs.readdir(baseDir, { withFileTypes: true });
-  for (const entry of entries) {
+async function pathExists(path) {
+  try {
+    await fs.access(path);
+    return true;
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return false;
+    }
+    throw error;
+  }
+}
+
+async function collectExistingPublicationIds(baseDir) {
+  const ids = new Set();
+  let topLevelEntries = [];
+
+  try {
+    topLevelEntries = await fs.readdir(baseDir, { withFileTypes: true });
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return ids;
+    }
+    throw error;
+  }
+
+  for (const entry of topLevelEntries) {
     if (!entry.isDirectory()) continue;
-    const match = entry.name.match(/^pub-(\d+)$/);
+
+    const topLevelPath = join(baseDir, entry.name);
+    if (await pathExists(join(topLevelPath, 'metadata.json'))) {
+      ids.add(entry.name);
+      continue;
+    }
+
+    const nestedEntries = await fs.readdir(topLevelPath, { withFileTypes: true });
+    for (const nestedEntry of nestedEntries) {
+      if (!nestedEntry.isDirectory()) continue;
+      const nestedPath = join(topLevelPath, nestedEntry.name);
+      if (await pathExists(join(nestedPath, 'metadata.json'))) {
+        ids.add(nestedEntry.name);
+      }
+    }
+  }
+
+  return ids;
+}
+
+function nextPublicationNumber(existingIds) {
+  let maxId = 0;
+  for (const id of existingIds) {
+    const match = id.match(/^pub-(\d+)$/);
     if (!match) continue;
     const numericId = Number.parseInt(match[1], 10);
     if (numericId > maxId) maxId = numericId;
@@ -199,34 +244,6 @@ async function nextPublicationNumber(baseDir) {
 
 function publicationIdFromNumber(number) {
   return `pub-${String(number).padStart(3, '0')}`;
-}
-
-function buildReadme(title, id) {
-  return `# ${title}
-
-## Metadata
-
-This directory can contain publication files:
-
-- \`metadata.json\` - Required metadata (created)
-- \`paper.pdf\` - Optional paper PDF
-- \`slides.pdf\` or \`slides.pptx\` - Optional slides
-- \`poster.pdf\` or \`poster.jpg\` - Optional poster
-- \`bibtex.bib\` - Optional BibTeX
-- \`thumbnail.jpg\` - Optional thumbnail
-
-## Example Structure
-
-\`\`\`
-${id}/
-├── metadata.json
-├── paper.pdf
-├── slides.pdf
-├── poster.jpg
-├── bibtex.bib
-└── README.md
-\`\`\`
-`;
 }
 
 async function main() {
@@ -252,25 +269,20 @@ async function main() {
     const metadataRows = toMetadataRows(rows, headerIndex, asDraft);
 
     await fs.mkdir(publicationsDir, { recursive: true });
-    let nextNumber = await nextPublicationNumber(publicationsDir);
+    const existingIds = await collectExistingPublicationIds(publicationsDir);
+    let nextNumber = nextPublicationNumber(existingIds);
     const planned = [];
 
     for (const metadata of metadataRows) {
       let id = publicationIdFromNumber(nextNumber);
-      let targetDir = join(publicationsDir, id);
-
-      while (true) {
-        try {
-          await fs.access(targetDir);
-          nextNumber += 1;
-          id = publicationIdFromNumber(nextNumber);
-          targetDir = join(publicationsDir, id);
-        } catch {
-          break;
-        }
+      while (existingIds.has(id)) {
+        nextNumber += 1;
+        id = publicationIdFromNumber(nextNumber);
       }
 
+      const targetDir = join(publicationsDir, String(metadata.year), id);
       planned.push({ id, targetDir, metadata });
+      existingIds.add(id);
       nextNumber += 1;
     }
 
@@ -287,11 +299,6 @@ async function main() {
       await fs.writeFile(
         join(item.targetDir, 'metadata.json'),
         `${JSON.stringify(item.metadata, null, 2)}\n`,
-        'utf8',
-      );
-      await fs.writeFile(
-        join(item.targetDir, 'README.md'),
-        buildReadme(item.metadata.title, item.id),
         'utf8',
       );
     }

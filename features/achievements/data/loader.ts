@@ -3,11 +3,26 @@ import { Publication, PublicationMetadata } from '../types';
 type PublicationMetadataModule = PublicationMetadata | { default: PublicationMetadata };
 
 function extractPublicationId(filePath: string): string {
-  const match = filePath.match(/^\.\/publications\/([^/]+)\/metadata\.json$/);
-  if (!match) {
+  const normalizedPath = filePath.replace(/\\/g, '/');
+
+  if (!normalizedPath.startsWith('./publications/') || !normalizedPath.endsWith('/metadata.json')) {
     throw new Error(`Invalid publication metadata path: ${filePath}`);
   }
-  return match[1];
+
+  const pathSegments = normalizedPath.split('/');
+  if (pathSegments.length < 4) {
+    throw new Error(`Invalid publication metadata path: ${filePath}`);
+  }
+
+  // Support both:
+  // - ./publications/<id>/metadata.json
+  // - ./publications/<year>/<id>/metadata.json
+  const publicationId = pathSegments[pathSegments.length - 2];
+  if (!publicationId) {
+    throw new Error(`Invalid publication metadata path: ${filePath}`);
+  }
+
+  return publicationId;
 }
 
 function unwrapMetadata(moduleValue: PublicationMetadataModule): PublicationMetadata {
@@ -17,16 +32,21 @@ function unwrapMetadata(moduleValue: PublicationMetadataModule): PublicationMeta
   return moduleValue;
 }
 
-const publicationMetadataModules = import.meta.glob('./publications/*/metadata.json', {
+const publicationMetadataModules = import.meta.glob('./publications/**/metadata.json', {
   eager: true,
 }) as Record<string, PublicationMetadataModule>;
 
-const publicationMetadataById: Record<string, PublicationMetadata> = Object.fromEntries(
-  Object.entries(publicationMetadataModules).map(([path, moduleValue]) => [
-    extractPublicationId(path),
-    unwrapMetadata(moduleValue),
-  ]),
-);
+const publicationMetadataById: Record<string, PublicationMetadata> = {};
+
+for (const [path, moduleValue] of Object.entries(publicationMetadataModules)) {
+  const publicationId = extractPublicationId(path);
+  if (publicationMetadataById[publicationId]) {
+    throw new Error(
+      `Duplicate publication ID detected: '${publicationId}'. Please ensure IDs are unique.`,
+    );
+  }
+  publicationMetadataById[publicationId] = unwrapMetadata(moduleValue);
+}
 
 const RECENT_YEAR_COUNT = 4;
 
