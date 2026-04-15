@@ -1,4 +1,5 @@
 import type { ResearchProject } from '../../../types';
+import cmc_clack_image from '../../../images/cmc_crack.png';
 
 const cmcProject: ResearchProject = {
   id: 'cmc',
@@ -6,8 +7,7 @@ const cmcProject: ResearchProject = {
   sortOrder: 40,
   description:
     'セラミックス基複合材料（CMC）の損傷・き裂を画像解析で高精度に検出し、劣化評価と材料設計に活用する研究です。',
-  image:
-    'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80',
+  image: cmc_clack_image,
   detail: {
     subtitle: 'CMC材料評価のための画像解析・AI基盤',
     keywords: [
