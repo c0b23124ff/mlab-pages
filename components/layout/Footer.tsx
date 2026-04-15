@@ -5,7 +5,7 @@ interface FooterProps {
 }
 
 export const Footer = ({ onNavigate }: FooterProps) => {
-  const links = ['About', 'News', 'Research', 'Achievements', 'Members', 'Contact'];
+  const links = ['About', 'News', 'Research', 'Achievements', 'Contact'];
 
   return (
     <footer className="bg-[#344F1F] text-[#F9F5F0]">

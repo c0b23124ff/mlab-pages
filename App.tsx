@@ -15,7 +15,6 @@ import { NewsDetailPage } from './features/news/NewsDetailPage';
 import { ResearchPage } from './features/research/ResearchPage';
 import { ContactPage } from './features/contact/ContactPage';
 import { AchievementsPage } from './features/achievements/AchievementsPage';
-import { MembersPage } from './features/members/MembersPage';
 
 function HomePage({
   onNavigate,
@@ -55,7 +54,6 @@ function App() {
     achievements: '/achievements',
     contact: '/contact',
     home: '/',
-    members: '/members',
     news: '/news',
     research: '/research',
   };
@@ -75,7 +73,6 @@ function App() {
     if (pathname.startsWith('/news')) return 'news';
     if (pathname.startsWith('/research')) return 'research';
     if (pathname.startsWith('/achievements')) return 'achievements';
-    if (pathname.startsWith('/members')) return 'members';
     if (pathname.startsWith('/contact')) return 'contact';
     return 'home';
   }, [location.pathname]);
@@ -93,7 +90,6 @@ function App() {
           <Route path="/news/:newsId" element={<NewsDetailRoute onNavigate={handleNavigate} />} />
           <Route path="/research" element={<ResearchPage />} />
           <Route path="/achievements" element={<AchievementsPage />} />
-          <Route path="/members" element={<MembersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
