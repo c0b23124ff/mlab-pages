@@ -1,4 +1,3 @@
-import { Button } from '../../components/ui/button';
 import { Link } from 'react-router-dom';
 import { researchProjects } from './projects';
 
@@ -15,37 +14,29 @@ export const ResearchPage = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {researchProjects.map((project) => (
-            <article
+            <Link
               key={project.id}
-              className="group flex flex-col h-full bg-[#F9F5F0] border border-[#344F1F]/20 hover:border-[#344F1F] transition-colors duration-300"
+              to={`/research/${project.id}`}
+              className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4991A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F9F5F0]"
             >
-              <div className="aspect-[16/9] overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="p-8 flex flex-col flex-grow">
-                <h2 className="text-xl font-bold text-[#344F1F] mb-4 group-hover:text-[#F4991A] transition-colors">
-                  {project.title}
-                </h2>
-                <p className="text-[#344F1F]/80 mb-8 leading-relaxed flex-grow">
-                  {project.description}
-                </p>
-                <div className="mt-auto">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full border-[#F4991A] text-[#F4991A] hover:bg-[#F4991A] hover:text-white rounded-none transition-colors"
-                  >
-                    <Link to={`/research/${project.id}`}>詳細</Link>
-                  </Button>
+              <article className="flex flex-col h-full bg-[#F9F5F0] border border-[#344F1F]/20 hover:border-[#344F1F] transition-colors duration-300">
+                <div className="aspect-[16/9] overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
                 </div>
-              </div>
-            </article>
+
+                <div className="p-8 flex flex-col flex-grow">
+                  <h2 className="text-xl font-bold text-[#344F1F] mb-4 group-hover:text-[#F4991A] transition-colors">
+                    {project.title}
+                  </h2>
+                  <p className="text-[#344F1F]/80 leading-relaxed flex-grow">{project.description}</p>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,9 +1,10 @@
-import type { ResearchProject } from '../../types';
-import columnDetectionImage from '../../images/column-detection.png';
+import type { ResearchProject } from '../../../types';
+import columnDetectionImage from '../../../images/column-detection.png';
 
-export const columnDetectionProject: ResearchProject = {
+const columnDetectionProject: ResearchProject = {
   id: 'column-detection',
   title: '列検知',
+  sortOrder: 10,
   description:
     '監視カメラ映像から待機列を自動検出し、蛇行列にも対応した人数計測で混雑回避を支援する研究です。',
   image: columnDetectionImage,
@@ -46,3 +47,5 @@ export const columnDetectionProject: ResearchProject = {
   ],
   relatedPublicationKeywords: ['待機列', '列検知', 'Queue-flow', 'Flow Intensity', '人数計測'],
 };
+
+export default columnDetectionProject;
