@@ -60,6 +60,7 @@ export const ResearchProjectDetailPage = () => {
   }, [project.relatedPublicationIds, project.relatedPublicationKeywords]);
 
   const details = project.detail;
+  const hasGrantInfo = Boolean(details?.grantTitle || details?.grantNumber || details?.grantCategory);
 
   return (
     <div className="min-h-screen pt-20 bg-[#F9F5F0]">
@@ -84,40 +85,46 @@ export const ResearchProjectDetailPage = () => {
 
         {details ? (
           <>
-            <section className="bg-white border border-[#344F1F]/15 rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-[#344F1F] mb-6">研究課題情報</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <p className="text-sm text-[#344F1F]/70 mb-1">研究課題</p>
-                  <p className="text-[#344F1F] font-semibold">{details.grantTitle ?? '-'}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-[#344F1F]/70 mb-1">研究課題/領域番号</p>
-                  <p className="text-[#344F1F] font-semibold">{details.grantNumber ?? '-'}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-[#344F1F]/70 mb-1">研究種目</p>
-                  <p className="text-[#344F1F] font-semibold">{details.grantCategory ?? '-'}</p>
-                </div>
-              </div>
-              {details.references && details.references.length > 0 && (
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {details.references.map((reference) => (
-                    <Button
-                      key={reference.url}
-                      asChild
-                      variant="outline"
-                      className="border-[#F4991A] text-[#F4991A] hover:bg-[#F4991A] hover:text-white"
-                    >
-                      <a href={reference.url} target="_blank" rel="noopener noreferrer">
-                        {reference.label}
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    </Button>
-                  ))}
-                </div>
-              )}
-            </section>
+            {(hasGrantInfo || (details.references && details.references.length > 0)) && (
+              <section className="bg-white border border-[#344F1F]/15 rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-[#344F1F] mb-6">
+                  {hasGrantInfo ? '研究課題情報' : '関連リンク'}
+                </h2>
+                {hasGrantInfo && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                      <p className="text-sm text-[#344F1F]/70 mb-1">研究課題</p>
+                      <p className="text-[#344F1F] font-semibold">{details.grantTitle}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-[#344F1F]/70 mb-1">研究課題/領域番号</p>
+                      <p className="text-[#344F1F] font-semibold">{details.grantNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-[#344F1F]/70 mb-1">研究種目</p>
+                      <p className="text-[#344F1F] font-semibold">{details.grantCategory}</p>
+                    </div>
+                  </div>
+                )}
+                {details.references && details.references.length > 0 && (
+                  <div className={`${hasGrantInfo ? 'mt-6' : ''} flex flex-wrap gap-3`}>
+                    {details.references.map((reference) => (
+                      <Button
+                        key={reference.url}
+                        asChild
+                        variant="outline"
+                        className="border-[#F4991A] text-[#F4991A] hover:bg-[#F4991A] hover:text-white"
+                      >
+                        <a href={reference.url} target="_blank" rel="noopener noreferrer">
+                          {reference.label}
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
 
             {details.keywords && details.keywords.length > 0 && (
               <section className="bg-white border border-[#344F1F]/15 rounded-2xl p-8">
@@ -196,4 +203,3 @@ export const ResearchProjectDetailPage = () => {
     </div>
   );
 };
-
