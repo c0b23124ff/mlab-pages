@@ -15,3 +15,6 @@ export const researchProjects: ResearchProject[] = [
   robotSpatialRecognitionProject,
 ];
 
+export function getResearchProjectById(id: string): ResearchProject | undefined {
+  return researchProjects.find((project) => project.id === id);
+}

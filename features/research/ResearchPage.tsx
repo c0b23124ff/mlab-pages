@@ -1,4 +1,5 @@
 import { Button } from '../../components/ui/button';
+import { Link } from 'react-router-dom';
 import { researchProjects } from './projects';
 
 export const ResearchPage = () => {
@@ -35,25 +36,13 @@ export const ResearchPage = () => {
                   {project.description}
                 </p>
                 <div className="mt-auto">
-                  {project.link ? (
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-[#F4991A] text-[#F4991A] hover:bg-[#F4991A] hover:text-white rounded-none transition-colors"
-                    >
-                      <a href={project.link} target="_blank" rel="noopener noreferrer">
-                        {project.ctaLabel ?? '詳細を見る'}
-                      </a>
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="outline"
-                      className="w-full border-[#344F1F]/25 text-[#344F1F]/60 rounded-none cursor-not-allowed"
-                      disabled
-                    >
-                      詳細準備中
-                    </Button>
-                  )}
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-[#F4991A] text-[#F4991A] hover:bg-[#F4991A] hover:text-white rounded-none transition-colors"
+                  >
+                    <Link to={`/research/${project.id}`}>詳細</Link>
+                  </Button>
                 </div>
               </div>
             </article>

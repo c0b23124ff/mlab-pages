@@ -3,7 +3,24 @@ export interface ResearchProject {
   title: string;
   description: string;
   image: string;
-  link?: string;
   ctaLabel?: string;
+  detail?: ResearchProjectDetail;
+  relatedPublicationIds?: string[];
+  relatedPublicationKeywords?: string[];
 }
 
+export interface ResearchProjectReferenceLink {
+  label: string;
+  url: string;
+}
+
+export interface ResearchProjectDetail {
+  subtitle?: string;
+  grantTitle?: string;
+  grantNumber?: string;
+  grantCategory?: string;
+  keywords?: string[];
+  overview?: string;
+  progress?: string;
+  references?: ResearchProjectReferenceLink[];
+}
