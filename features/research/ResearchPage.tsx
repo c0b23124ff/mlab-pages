@@ -42,11 +42,11 @@ export const ResearchPage = () => {
           return (
             <section key={category}>
               <h2 className="text-3xl font-bold text-[#344F1F] mb-8">{category}</h2>
-              <div className="space-y-12">
+              <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-12">
                 {Object.entries(subcategories).map(([subcategory, projects]) => (
-                  <div key={subcategory}>
-                    <h3 className="text-2xl font-semibold text-[#344F1F] mb-6">{subcategory}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div key={subcategory} className="space-y-6">
+                    <h3 className="text-xl font-semibold text-[#344F1F]">{subcategory}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {projects.map((project) => (
                         <Link
                           key={project.id}
