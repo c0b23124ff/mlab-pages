@@ -2,19 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '../../../components/ui/button';
 import { Sparkles, ChevronDown } from 'lucide-react';
-
-const heroImages = [
-  '/images/hero/image_1.jpg',
-  '/images/hero/image_2.jpg',
-  '/images/hero/image_3.jpg',
-  '/images/hero/image_4.jpg',
-  '/images/hero/image_5.jpg',
-  '/images/hero/image_6.jpg',
-  '/images/hero/image_7.jpg',
-  '/images/hero/image_8.jpg',
-];
-
-const marqueeImages = [...heroImages, ...heroImages];
+import heroImage from '../images/all-1.png';
 
 interface HeroNewProps {
   onNavigate?: (page: string) => void;
@@ -22,7 +10,6 @@ interface HeroNewProps {
 
 export const HeroNew = ({ onNavigate }: HeroNewProps) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
@@ -35,25 +22,16 @@ export const HeroNew = ({ onNavigate }: HeroNewProps) => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#344F1F] pt-20 min-h-screen flex items-center justify-center">
+    <section className="relative overflow-hidden bg-[#344F1F] pt-28 min-h-screen flex items-center justify-center">
 
-      {/* ── Scrolling image strip ── */}
-      {/* Fix: images displayed at natural aspect ratio (h-[80vh] w-auto) → 80%+ visible */}
-      <div className="absolute inset-0 flex items-center overflow-hidden">
-        <div
-          className="flex items-center gap-2"
-          style={{ animation: 'marquee 20s linear infinite', width: 'max-content' }}
-        >
-          {marqueeImages.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              className="h-screen w-auto flex-shrink-0 rounded-lg"
-              draggable={false}
-            />
-          ))}
-        </div>
+      {/* ── Background image ── */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src={heroImage}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-bottom"
+          draggable={false}
+        />
       </div>
 
       {/* ── Dark overlay ── */}

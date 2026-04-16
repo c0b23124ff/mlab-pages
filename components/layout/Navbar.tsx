@@ -66,6 +66,17 @@ export const Navbar = ({ onNavigate, currentPage }: NavbarProps) => {
         </div>
       </div>
 
+      {/* Announcement Banner */}
+      <div className="bg-[#F4991A] text-white text-xs sm:text-sm py-1.5 px-4 flex items-center justify-center gap-4 font-medium tracking-wide">
+        <span>🚧 このサイトはただいま更新中です</span>
+        <button
+          onClick={() => handleNavClick('contact')}
+          className="underline underline-offset-2 hover:opacity-80 transition-opacity whitespace-nowrap"
+        >
+          見学などのお問い合わせはこちら →
+        </button>
+      </div>
+
       {/* Mobile Menu */}
       {isOpen && (
         <div className="lg:hidden bg-[#F9F5F0] border-t border-[#344F1F]/10 h-screen overflow-y-auto">
