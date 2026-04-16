@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" class="w-full h-full">
+  <defs>
+    <linearGradient id="roverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#344F1F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F4991A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background (space/planet surface) -->
+  <rect width="400" height="300" fill="#F9F5F0"/>
+  <!-- Stars -->
+  <circle cx="50" cy="30" r="1" fill="#344F1F"/>
+  <circle cx="150" cy="20" r="1" fill="#344F1F"/>
+  <circle cx="250" cy="40" r="1" fill="#344F1F"/>
+  <circle cx="350" cy="25" r="1" fill="#344F1F"/>
+
+  <!-- Planet surface -->
+  <ellipse cx="200" cy="250" rx="180" ry="30" fill="#344F1F" opacity="0.2"/>
+  <path d="M20,220 Q100,200 200,220 Q300,240 380,220 L380,300 L20,300 Z" fill="#F4991A" opacity="0.3"/>
+
+  <!-- Rover -->
+  <g transform="translate(150,180)">
+    <!-- Body -->
+    <rect x="10" y="10" width="40" height="25" fill="#F4991A"/>
+    <!-- Wheels -->
+    <circle cx="15" cy="40" r="8" fill="#344F1F"/>
+    <circle cx="25" cy="40" r="8" fill="#344F1F"/>
+    <circle cx="35" cy="40" r="8" fill="#344F1F"/>
+    <circle cx="45" cy="40" r="8" fill="#344F1F"/>
+    <!-- Antenna -->
+    <line x1="30" y1="10" x2="30" y2="0" stroke="#344F1F" stroke-width="2"/>
+    <!-- Solar panels -->
+    <rect x="0" y="5" width="10" height="20" fill="#344F1F" opacity="0.7"/>
+    <rect x="50" y="5" width="10" height="20" fill="#344F1F" opacity="0.7"/>
+    <!-- Camera -->
+    <rect x="25" y="8" width="10" height="5" fill="#344F1F"/>
+  </g>
+
+  <!-- Rocks/obstacles -->
+  <ellipse cx="100" cy="220" rx="15" ry="10" fill="#344F1F" opacity="0.5"/>
+  <ellipse cx="300" cy="210" rx="12" ry="8" fill="#344F1F" opacity="0.5"/>
+
+  <!-- Title -->
+  <text x="200" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#344F1F">ローバ</text>
+</svg>

@@ -6,6 +6,7 @@ const columnDetectionProject: ResearchProject = {
   title: '列検知',
   sortOrder: 10,
   category: 'ロボットエンジニア教育',
+  subcategory: '列検知',
   description:
     '監視カメラ映像から待機列を自動検出し、蛇行列にも対応した人数計測で混雑回避を支援する研究です。',
   image: columnDetectionImage,

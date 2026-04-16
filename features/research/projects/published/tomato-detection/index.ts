@@ -6,6 +6,7 @@ const tomatoDetectionProject: ResearchProject = {
   title: 'トマト収穫ロボット',
   sortOrder: 30,
   category: 'スマート農業',
+  subcategory: 'トマト',
   description:
     'トマト収穫ロボットの効率向上を目的に、機械学習・強化学習を活用して最適化を行う研究です。',
   image: tomatoDetectionImage,

@@ -6,6 +6,7 @@ const recognition3dProject: ResearchProject = {
   title: '3D Recognition',
   sortOrder: 11,
   category: 'Spatial',
+  subcategory: '3次元空間認識',
   description:
     '3D物体認識技術を用いた精密な環境理解と物体操作のための研究です。',
   image: recognition3dImage,

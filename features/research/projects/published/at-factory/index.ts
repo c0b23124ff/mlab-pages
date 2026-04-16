@@ -5,6 +5,7 @@ const atFactoryProject: ResearchProject = {
   title: '@factory',
   sortOrder: 20,
   category: 'ロボット',
+  subcategory: 'ロボットxスマート工場',
   description:
     'フィジカルAI検証のために、プラグイン構造で要素交換可能な仮想工場シミュレーション基盤を提供するプロジェクトです。',
   image:

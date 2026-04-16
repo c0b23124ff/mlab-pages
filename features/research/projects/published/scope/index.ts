@@ -6,6 +6,7 @@ const scopeProject: ResearchProject = {
   title: 'SCOPE',
   sortOrder: 10,
   category: 'Spatial',
+  subcategory: 'SCOPE',
   description:
     'Spatial 認識技術を活用した環境理解とナビゲーションのための研究です。',
   image: scopeImage,

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" class="w-full h-full">
+  <defs>
+    <linearGradient id="classGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#344F1F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F4991A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="#F9F5F0"/>
+
+  <!-- Classroom -->
+  <g transform="translate(50,50)">
+    <!-- Blackboard -->
+    <rect x="0" y="0" width="300" height="80" fill="#344F1F"/>
+    <!-- Equations on board -->
+    <text x="150" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#F9F5F0">F = ma</text>
+    <text x="150" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#F9F5F0">ロボティクス</text>
+
+    <!-- Desks -->
+    <rect x="50" y="120" width="40" height="25" fill="#F4991A"/>
+    <rect x="110" y="120" width="40" height="25" fill="#F4991A"/>
+    <rect x="170" y="120" width="40" height="25" fill="#F4991A"/>
+    <rect x="230" y="120" width="40" height="25" fill="#F4991A"/>
+
+    <!-- Students -->
+    <circle cx="70" cy="110" r="8" fill="#344F1F"/>
+    <circle cx="130" cy="110" r="8" fill="#344F1F"/>
+    <circle cx="190" cy="110" r="8" fill="#344F1F"/>
+    <circle cx="250" cy="110" r="8" fill="#344F1F"/>
+  </g>
+
+  <!-- Robot model -->
+  <g transform="translate(320,200)">
+    <rect x="0" y="10" width="25" height="30" fill="#F4991A"/>
+    <circle cx="12.5" cy="45" r="6" fill="#344F1F"/>
+  </g>
+
+  <!-- Title -->
+  <text x="200" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#344F1F">授業</text>
+</svg>

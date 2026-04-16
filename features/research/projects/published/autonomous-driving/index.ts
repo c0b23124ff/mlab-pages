@@ -5,6 +5,7 @@ const autonomousDrivingProject: ResearchProject = {
   title: '自動運転',
   sortOrder: 50,
   category: '過去の研究',
+  subcategory: '自動運転系（レーンレス，バーチャルウォール）',
   description:
     '深層強化学習とマルチエージェント制御を用いて、協調型自動運転の安全性・効率性を高める研究です。',
   image:
