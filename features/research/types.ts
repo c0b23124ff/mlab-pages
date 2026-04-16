@@ -4,6 +4,7 @@ export interface ResearchProject {
   description: string;
   image: string;
   sortOrder?: number;
+  category?: string;
   ctaLabel?: string;
   detail?: ResearchProjectDetail;
   relatedPublicationIds?: string[];

@@ -5,6 +5,7 @@ const cmcProject: ResearchProject = {
   id: 'cmc',
   title: 'CMC (Ceramic Matrix Composites)',
   sortOrder: 40,
+  category: 'ロボットエンジニア教育',
   description:
     'セラミックス基複合材料（CMC）の損傷・き裂を画像解析で高精度に検出し、劣化評価と材料設計に活用する研究です。',
   image: cmc_clack_image,
